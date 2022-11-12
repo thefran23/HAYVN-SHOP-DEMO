@@ -1,0 +1,41 @@
+<mat-form-field appearance="fill">
+  <mat-label>Search Products</mat-label>
+  <input
+    #searchTerm
+    matInput
+    type="text"
+    autocomplete="off"
+    [formControl]="searchTermControl"
+  />
+  <button matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+<mat-form-field appearance="fill">
+  <mat-label>Order By</mat-label>
+  <mat-select value="Price Asc" (selectionChange)="updateOrderBy($event.value)">
+    <mat-option [value]="order" *ngFor="let order of orderBy">{{
+      order
+    }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<cdk-virtual-scroll-viewport
+  appendOnly
+  itemSize="60"
+  class="products-viewport"
+  (scrolledIndexChange)="scrollEvent()"
+>
+  <mat-card
+    *cdkVirtualFor="let product of filteredProductsList$ | async"
+    class="product-card"
+    matRipple
+    [matRippleCentered]="true"
+    [routerLink]="product.name"
+  >
+    <mat-card-header>
+      <mat-card-title>{{ product.name }}</mat-card-title>
+      <mat-card-subtitle>{{ product.cost_in_credits }}</mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+</cdk-virtual-scroll-viewport>
