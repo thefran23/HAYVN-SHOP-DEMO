@@ -34,6 +34,16 @@ export const setProductDetails = createAction(
   props<{ product: Product }>()
 );
 
+export const addToCart = createAction(
+  '[Product] [NF] Add Product to Cart',
+  props<{ product: Product }>()
+);
+
+export const removeFromCart = createAction(
+  '[Product] [NF] Remove Product from Cart',
+  props<{ url: string }>()
+);
+
 export const loadProductDetails = createAction(
   '[ProductDetails] Load ProductDetails',
   props<{ url: string }>()

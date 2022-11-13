@@ -1,6 +1,10 @@
-<mat-toolbar color="primary">
-  <div>HAYVN SHOP - Demo by Francois Rossouw</div></mat-toolbar
->
+<mat-toolbar color="primary" class="toolbar">
+  <div>HAYVN SHOP - Demo by Francois Rossouw</div>
+  <div>
+    <span>{{ cartItemsCount$ | async }}</span>
+    <mat-icon>shopping_cart</mat-icon>
+  </div>
+</mat-toolbar>
 <main>
   <router-outlet></router-outlet>
 </main>
