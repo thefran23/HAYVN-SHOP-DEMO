@@ -41,24 +41,40 @@ export class ProductsEffects {
       // Using mergemap to prevent unnecesary requetss when searching
       mergeMap((payload) => {
         console.log('pl ', payload);
-        return this.productsService
-          .searchProductsByName(payload.searchTerm)
-          .pipe(
-            mergeMap((res) => {
-              console.log('res ', res);
-              return [
-                ProductActions.loadProductsSuccess({
-                  products: res.results,
-                  vehiclesNext: res.vehiclesNext,
-                  starshipsNext: res.starshipsNext,
-                }),
-              ];
-            })
-          );
+        return this.productsService.searchProducts(payload.searchTerm).pipe(
+          mergeMap((res) => {
+            console.log('res ', res);
+            return [
+              ProductActions.loadProductsSuccess({
+                products: res.results,
+                vehiclesNext: res.vehiclesNext,
+                starshipsNext: res.starshipsNext,
+              }),
+            ];
+          })
+        );
       }),
       catchError((error) => {
         console.error(error);
         return [ProductActions.loadProductsFailure()];
+      })
+    )
+  );
+
+  loadProductDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductActions.loadProductDetails),
+      // Using mergemap to cancel prev requests
+      mergeMap((payload) => {
+        return this.productsService.getProduct(payload.url).pipe(
+          mergeMap((product) => {
+            return [ProductActions.loadProductDetailsSuccess({ product })];
+          })
+        );
+      }),
+      catchError((error) => {
+        console.error(error);
+        return [ProductActions.loadProductDetailsFailure()];
       })
     )
   );

@@ -8,12 +8,14 @@ export interface State {
   productsList: Product[];
   vehiclesNext: string;
   starshipsNext: string;
+  selectedProduct: Product;
 }
 
 export const initialState: State = {
   productsList: [],
   vehiclesNext: '',
   starshipsNext: '',
+  selectedProduct: {} as Product,
 };
 
 export const reducer = createReducer(
@@ -33,5 +35,12 @@ export const reducer = createReducer(
       };
     }
   ),
+  on(ProductsActions.setProductDetails, (state, { product }) => {
+    return { ...state, productDetails: product };
+  }),
+
+  on(ProductsActions.loadProductDetailsSuccess, (state, { product }) => {
+    return { ...state, productDetails: product };
+  }),
   on(ProductsActions.loadProductsFailure, (state, action) => state)
 );

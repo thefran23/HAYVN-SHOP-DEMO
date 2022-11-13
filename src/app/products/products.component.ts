@@ -49,7 +49,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.searchTermControl.valueChanges
       .pipe(startWith(''), takeUntil(this.destroyed$))
       .subscribe((searchTerm) => {
-        console.log('SEARCH TERM ', searchTerm);
         if (searchTerm) {
           this.store.dispatch(searchProducts({ searchTerm }));
         }

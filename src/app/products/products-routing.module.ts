@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProductsResolver } from './products.resolver';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
+import { ProductDetailsResolver } from '../product-details/product-details.resolver';
 
 const routes: Routes = [
   {
@@ -13,6 +14,7 @@ const routes: Routes = [
   {
     path: ':id',
     component: ProductDetailsComponent,
+    resolve: { data: ProductDetailsResolver },
   },
 ];
 @NgModule({

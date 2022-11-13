@@ -31,9 +31,18 @@
     class="product-card"
     matRipple
     [matRippleCentered]="true"
-    [routerLink]="product.name"
+    [routerLink]="
+      product.url
+        .substring(product.url.indexOf('/api/') + 5, product.url.length - 1)
+        .replace('/', '-')
+    "
   >
     <mat-card-header>
+      {{
+        product.url
+          .substring(product.url.indexOf('/api/') + 5, product.url.length - 1)
+          .replace('/', '-')
+      }}
       <mat-card-title>{{ product.name }}</mat-card-title>
       <mat-card-subtitle>{{ product.cost_in_credits }}</mat-card-subtitle>
     </mat-card-header>
