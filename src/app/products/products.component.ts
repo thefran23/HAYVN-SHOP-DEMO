@@ -13,7 +13,7 @@ import * as fromRoot from 'src/app/core/ngrx/index';
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
 import { FormControl } from '@angular/forms';
-import { OrderBy, Product } from '../core/models/product.model';
+import { Product } from '../core/models/product.model';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import {
   addToCart,
@@ -34,7 +34,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
   formCtrlSub!: Subscription;
   destroyed$: Subject<void> = new Subject<void>();
   productsList$ = this.store.select((store) => store.products.productsList);
-  selectedOrderByFilter$ = new BehaviorSubject<OrderBy>('Price Asc');
   filteredProductsList$ = this.store.select((s) => s.products.productsList);
 
   constructor(

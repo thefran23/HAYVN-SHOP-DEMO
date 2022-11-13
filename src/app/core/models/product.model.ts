@@ -19,4 +19,8 @@ export interface Product {
   url: string;
 }
 
-export type OrderBy = 'Price Asc' | 'Price Desc';
+export interface SaleProduct {
+  url: string;
+  discount_percent: number;
+  valid_until: string;
+}

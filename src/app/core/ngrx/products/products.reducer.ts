@@ -1,12 +1,13 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { catchError } from 'rxjs';
-import { Product } from '../../models/product.model';
+import { Product, SaleProduct } from '../../models/product.model';
 import * as ProductsActions from './products.actions';
 
 export const productsFeatureKey = 'products';
 
 export interface State {
   productsList: Product[];
+  saleProducts: SaleProduct[];
   cart: Product[];
   vehiclesNext: string;
   starshipsNext: string;
@@ -15,6 +16,7 @@ export interface State {
 
 export const initialState: State = {
   productsList: [],
+  saleProducts: [],
   cart: [],
   vehiclesNext: '',
   starshipsNext: '',
@@ -38,6 +40,12 @@ export const reducer = createReducer(
       };
     }
   ),
+  on(ProductsActions.loadSaleProductsSuccess, (state, { saleProducts }) => {
+    return {
+      ...state,
+      saleProducts,
+    };
+  }),
   on(ProductsActions.setProductDetails, (state, { product }) => {
     return { ...state, productDetails: product };
   }),

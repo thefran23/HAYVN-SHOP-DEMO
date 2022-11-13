@@ -35,6 +35,28 @@ export class ProductsEffects {
     )
   );
 
+  loadSaleProducts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductActions.loadSaleProducts),
+      concatMap(() => {
+        return this.productsService.getSaleProducts().pipe(
+          mergeMap((res) => {
+            console.log('sale res ', res);
+            return [
+              ProductActions.loadSaleProductsSuccess({
+                saleProducts: res,
+              }),
+            ];
+          })
+        );
+      }),
+      catchError((error) => {
+        console.error(error);
+        return [ProductActions.loadProductsFailure()];
+      })
+    )
+  );
+
   searchProducts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProductActions.searchProducts),

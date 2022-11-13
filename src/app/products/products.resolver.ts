@@ -10,7 +10,10 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { take, concatMap, tap } from 'rxjs/operators';
 import * as fromRoot from 'src/app/core/ngrx/index';
-import { loadProducts } from '../core/ngrx/products/products.actions';
+import {
+  loadProducts,
+  loadSaleProducts,
+} from '../core/ngrx/products/products.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +31,12 @@ export class ProductsResolver implements Resolve<boolean> {
         if (productsLoaded) {
           return of(true);
         }
-        return of(true).pipe(tap(() => this.store.dispatch(loadProducts({}))));
+        return of(true).pipe(
+          tap(() => {
+            this.store.dispatch(loadProducts({}));
+            this.store.dispatch(loadSaleProducts());
+          })
+        );
       })
     );
   }

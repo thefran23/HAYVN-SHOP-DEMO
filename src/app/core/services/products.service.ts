@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../models/product.model';
-import { combineLatest, map, Observable } from 'rxjs';
-
+import { combineLatest, map, Observable, of } from 'rxjs';
+import mockSaleDataResponse from '../mocks/sale.json';
 @Injectable({
   providedIn: 'root',
 })
@@ -62,5 +62,9 @@ export class ProductsService {
 
   getProduct(url: string) {
     return this.http.get<Product>(url);
+  }
+
+  getSaleProducts() {
+    return of(mockSaleDataResponse);
   }
 }
