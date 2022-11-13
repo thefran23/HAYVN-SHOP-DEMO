@@ -13,7 +13,11 @@ import * as fromRoot from 'src/app/core/ngrx/index';
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
 import { FormControl } from '@angular/forms';
-import { Product, SaleProduct } from '../core/models/product.model';
+import {
+  Product,
+  ProductImage,
+  SaleProduct,
+} from '../core/models/product.model';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import {
   addToCart,
@@ -33,7 +37,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   searchTermControl = new FormControl();
   formCtrlSub!: Subscription;
   destroyed$: Subject<void> = new Subject<void>();
-  filteredProductsList$ = this.getProductsWithSalePrices();
+  productsToDisplay$ = this.getProductsToDisplay();
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -82,28 +86,32 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.store.dispatch(removeFromCart({ url }));
   }
 
-  getProductsWithSalePrices() {
+  getProductsToDisplay() {
     return combineLatest([
       this.store.select((s) => s.products.productsList),
       this.store.select((s) => s.products.saleProducts),
+      this.store.select((s) => s.products.productImages),
     ]).pipe(
-      map(([products, saleProducts]) => {
+      map(([products, saleProducts, productImages]) => {
         return products.map((product) => {
-          const isOnSale: SaleProduct | undefined = saleProducts.find(
+          const onSale: SaleProduct | undefined = saleProducts.find(
             (saleProduct) =>
               saleProduct.url === product.url &&
               new Date(saleProduct.valid_until) > new Date()
           );
-          if (!isOnSale) {
-            return product;
-          }
-          console.log('HERE');
+          const productImage: ProductImage | undefined = productImages.find(
+            (productImage) => productImage.url === product.url
+          );
+
           return {
             ...product,
-            salePrice: (
-              +product.cost_in_credits *
-              (isOnSale.discount_percent / 100)
-            ).toFixed(2),
+            salePrice: onSale
+              ? (
+                  +product.cost_in_credits *
+                  (onSale.discount_percent / 100)
+                ).toFixed(2)
+              : null,
+            image: productImage ? productImage.image : null,
           };
         });
       })

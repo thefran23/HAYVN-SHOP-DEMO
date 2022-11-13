@@ -19,7 +19,7 @@
   (scrolledIndexChange)="scrollEvent()"
 >
   <mat-card
-    *cdkVirtualFor="let product of filteredProductsList$ | async"
+    *cdkVirtualFor="let product of productsToDisplay$ | async"
     class="product-card"
     [routerLink]="
       product.url
@@ -29,7 +29,7 @@
   >
     <mat-card-header>
       <mat-card-title
-        >{{ product.name }}
+        >{{ product.name }} {{ product.image }}
         <button
           mat-icon-button
           color="primary"
