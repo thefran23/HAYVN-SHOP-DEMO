@@ -14,7 +14,7 @@
 
 <cdk-virtual-scroll-viewport
   appendOnly
-  itemSize="60"
+  itemSize="316"
   class="products-viewport"
   (scrolledIndexChange)="scrollEvent()"
 >
@@ -29,7 +29,7 @@
   >
     <mat-card-header>
       <mat-card-title
-        >{{ product.name }} {{ product.image }}
+        >{{ product.name }}
         <button
           mat-icon-button
           color="primary"
@@ -51,5 +51,11 @@
         }}</mat-card-subtitle
       >
     </mat-card-header>
+    <img
+      mat-card-image
+      class="product-image"
+      [src]="product.image"
+      alt="Product image"
+    />
   </mat-card>
 </cdk-virtual-scroll-viewport>

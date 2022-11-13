@@ -25,6 +25,7 @@ import {
   removeFromCart,
   searchProducts,
 } from '../core/ngrx/products/products.actions';
+import { PLACEHOLDER_IMG } from '../core/consts/helpers';
 
 @Component({
   selector: 'app-products',
@@ -111,7 +112,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
                   (onSale.discount_percent / 100)
                 ).toFixed(2)
               : null,
-            image: productImage ? productImage.image : null,
+            image: productImage ? productImage.image : PLACEHOLDER_IMG,
           };
         });
       })
