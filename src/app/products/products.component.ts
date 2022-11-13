@@ -13,7 +13,7 @@ import * as fromRoot from 'src/app/core/ngrx/index';
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
 import { FormControl } from '@angular/forms';
-import { Product } from '../core/models/product.model';
+import { Product, SaleProduct } from '../core/models/product.model';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import {
   addToCart,
@@ -33,8 +33,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   searchTermControl = new FormControl();
   formCtrlSub!: Subscription;
   destroyed$: Subject<void> = new Subject<void>();
-  productsList$ = this.store.select((store) => store.products.productsList);
-  filteredProductsList$ = this.store.select((s) => s.products.productsList);
+  filteredProductsList$ = this.getProductsWithSalePrices();
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -81,6 +80,34 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   removeFromCart(url: string) {
     this.store.dispatch(removeFromCart({ url }));
+  }
+
+  getProductsWithSalePrices() {
+    return combineLatest([
+      this.store.select((s) => s.products.productsList),
+      this.store.select((s) => s.products.saleProducts),
+    ]).pipe(
+      map(([products, saleProducts]) => {
+        return products.map((product) => {
+          const isOnSale: SaleProduct | undefined = saleProducts.find(
+            (saleProduct) =>
+              saleProduct.url === product.url &&
+              new Date(saleProduct.valid_until) > new Date()
+          );
+          if (!isOnSale) {
+            return product;
+          }
+          console.log('HERE');
+          return {
+            ...product,
+            salePrice: (
+              +product.cost_in_credits *
+              (isOnSale.discount_percent / 100)
+            ).toFixed(2),
+          };
+        });
+      })
+    );
   }
 
   clear() {
