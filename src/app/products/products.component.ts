@@ -49,7 +49,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   formCtrlSub!: Subscription;
   destroyed$: Subject<void> = new Subject<void>();
   productsToDisplay$ = this.getProductsToDisplay();
-  showLoader$ = new BehaviorSubject(true);
+  showLoader$ = new BehaviorSubject(false);
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -76,13 +76,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
       .pipe(
         startWith(''),
         takeUntil(this.destroyed$),
-        tap(() => this.showLoader$.next(true)),
-
         debounceTime(500),
         distinctUntilChanged()
       )
       .subscribe((searchTerm) => {
         if (searchTerm) {
+          this.showLoader$.next(true);
           this.store.dispatch(searchProducts({ searchTerm }));
         }
       });

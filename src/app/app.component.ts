@@ -30,8 +30,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     if (event.url !== '/products') {
       console.log('HERE');
       this.showArrow$.next(true);
+    } else {
+      this.showArrow$.next(false);
     }
-    this.showArrow$.next(false);
   };
 
   ngOnDestroy() {
