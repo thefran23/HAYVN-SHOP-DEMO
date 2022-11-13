@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Product } from '../models/product.model';
 import { combineLatest, map, Observable, of } from 'rxjs';
 import mockSaleDataResponse from '../mocks/sale.json';
+import mockImagesDataResponse from '../mocks/images.json';
 @Injectable({
   providedIn: 'root',
 })
@@ -66,5 +67,9 @@ export class ProductsService {
 
   getSaleProducts() {
     return of(mockSaleDataResponse);
+  }
+
+  getProductImages() {
+    return of(mockImagesDataResponse);
   }
 }

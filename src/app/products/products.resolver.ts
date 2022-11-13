@@ -11,6 +11,7 @@ import { Observable, of } from 'rxjs';
 import { take, concatMap, tap } from 'rxjs/operators';
 import * as fromRoot from 'src/app/core/ngrx/index';
 import {
+  loadProductImages,
   loadProducts,
   loadSaleProducts,
 } from '../core/ngrx/products/products.actions';
@@ -35,6 +36,7 @@ export class ProductsResolver implements Resolve<boolean> {
           tap(() => {
             this.store.dispatch(loadProducts({}));
             this.store.dispatch(loadSaleProducts());
+            this.store.dispatch(loadProductImages());
           })
         );
       })

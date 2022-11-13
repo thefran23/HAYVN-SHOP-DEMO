@@ -24,3 +24,8 @@ export interface SaleProduct {
   discount_percent: number;
   valid_until: string;
 }
+
+export interface ProductImage {
+  url: string;
+  image: string;
+}

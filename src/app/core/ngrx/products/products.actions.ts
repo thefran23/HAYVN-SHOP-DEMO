@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Product, SaleProduct } from '../../models/product.model';
+import { Product, ProductImage, SaleProduct } from '../../models/product.model';
 
 export const loadProducts = createAction(
   '[Products] Load Products',
@@ -26,6 +26,19 @@ export const loadSaleProductsSuccess = createAction(
 
 export const loadSaleProductsFailure = createAction(
   '[Products] Load Sale Products Failure'
+);
+
+export const loadProductImages = createAction('[Products] Load Product Images');
+
+export const loadProductImagesSuccess = createAction(
+  '[Products] Load Product Images Success',
+  props<{
+    productImages: ProductImage[];
+  }>()
+);
+
+export const loadProductImagesFailure = createAction(
+  '[Products] Load Product images'
 );
 
 export const searchProducts = createAction(

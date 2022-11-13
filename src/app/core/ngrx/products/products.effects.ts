@@ -57,6 +57,27 @@ export class ProductsEffects {
     )
   );
 
+  loadProductImages$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductActions.loadProductImages),
+      concatMap(() => {
+        return this.productsService.getProductImages().pipe(
+          mergeMap((res) => {
+            return [
+              ProductActions.loadProductImagesSuccess({
+                productImages: res,
+              }),
+            ];
+          })
+        );
+      }),
+      catchError((error) => {
+        console.error(error);
+        return [ProductActions.loadProductImagesFailure()];
+      })
+    )
+  );
+
   searchProducts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProductActions.searchProducts),
