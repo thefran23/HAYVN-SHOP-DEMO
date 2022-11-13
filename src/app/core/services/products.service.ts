@@ -35,6 +35,7 @@ export class ProductsService {
   }
 
   searchProductsByName(searchTerm: string) {
+    console.log('in service ', searchTerm);
     const starships = this.http.get<{ results: Product[]; next: string }>(
       `https://swapi.dev/api/starships/?search=${searchTerm}`
     );

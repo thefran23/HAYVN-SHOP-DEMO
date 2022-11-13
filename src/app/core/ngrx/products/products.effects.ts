@@ -40,6 +40,7 @@ export class ProductsEffects {
       ofType(ProductActions.searchProducts),
       // Using mergemap to prevent unnecesary requetss when searching
       mergeMap((payload) => {
+        console.log('pl ', payload);
         return this.productsService
           .searchProductsByName(payload.searchTerm)
           .pipe(

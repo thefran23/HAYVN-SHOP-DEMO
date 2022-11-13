@@ -37,7 +37,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   destroyed$: Subject<void> = new Subject<void>();
   productsList$ = this.store.select((store) => store.products.productsList);
   selectedOrderByFilter$ = new BehaviorSubject<OrderBy>('Price Asc');
-  filteredProductsList$ = this.getFilteredProducts();
+  filteredProductsList$ = this.store.select((s) => s.products.productsList);
 
   orderBy = ['Price Asc', 'Price Desc'];
   constructor(
@@ -45,7 +45,16 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private actions$: Actions // private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.searchTermControl.valueChanges
+      .pipe(startWith(''), takeUntil(this.destroyed$))
+      .subscribe((searchTerm) => {
+        console.log('SEARCH TERM ', searchTerm);
+        if (searchTerm) {
+          this.store.dispatch(searchProducts({ searchTerm }));
+        }
+      });
+  }
 
   ngOnDestroy() {
     this.destroyed$.next();
@@ -57,38 +66,40 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.selectedOrderByFilter$.next(orderBy);
   }
 
-  getFilteredProducts() {
-    return combineLatest([
-      this.productsList$,
-      this.searchTermControl.valueChanges.pipe(startWith('')),
-      this.selectedOrderByFilter$,
-    ]).pipe(
-      map(([products, filter, orderBy]) => {
-        if (filter.length === 0) {
-          return products.slice().sort((a, b) => {
-            if (orderBy === 'Price Asc') {
-              return +a.cost_in_credits - +b.cost_in_credits;
-            }
-            return +b.cost_in_credits - +a.cost_in_credits;
-          });
-        }
-        this.store.dispatch(searchProducts(filter));
+  // getFilteredProducts() {
+  //   this.store.dispatch(searchProducts(filter));
 
-        return products
-          .filter((products) =>
-            products.name
-              .toLowerCase()
-              .includes(filter.toString().toLowerCase())
-          )
-          .sort((a, b) => {
-            if (orderBy === 'Price Asc') {
-              return +a.cost_in_credits - +b.cost_in_credits;
-            }
-            return +b.cost_in_credits - +a.cost_in_credits;
-          });
-      })
-    );
-  }
+  // return combineLatest([
+  //   this.productsList$,
+  //   this.searchTermControl.valueChanges.pipe(startWith('')),
+  //   this.selectedOrderByFilter$,
+  // ]).pipe(
+  //   map(([products, filter, orderBy]) => {
+  //     if (filter.length === 0) {
+  //       return products.slice().sort((a, b) => {
+  //         if (orderBy === 'Price Asc') {
+  //           return +a.cost_in_credits - +b.cost_in_credits;
+  //         }
+  //         return +b.cost_in_credits - +a.cost_in_credits;
+  //       });
+  //     }
+  //     this.store.dispatch(searchProducts(filter));
+
+  //     return products
+  //       .filter((products) =>
+  //         products.name
+  //           .toLowerCase()
+  //           .includes(filter.toString().toLowerCase())
+  //       )
+  //       .sort((a, b) => {
+  //         if (orderBy === 'Price Asc') {
+  //           return +a.cost_in_credits - +b.cost_in_credits;
+  //         }
+  //         return +b.cost_in_credits - +a.cost_in_credits;
+  //       });
+  //   })
+  // );
+  // }
 
   scrollEvent() {
     if (this.viewPort.measureScrollOffset('bottom') < 60) {
