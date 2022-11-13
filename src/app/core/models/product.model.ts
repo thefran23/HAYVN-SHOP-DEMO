@@ -29,3 +29,9 @@ export interface ProductImage {
   url: string;
   image: string;
 }
+
+export interface CartProduct extends Product, ProductImage {
+  salePrice: string | undefined;
+  discount_percent?: number;
+  valid_until?: string;
+}

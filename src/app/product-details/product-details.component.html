@@ -1,45 +1,59 @@
-<mat-card class="product-card mat-elevation-z8">
-  <div class="sale-tag" *ngIf="(selectedProduct$ | async)?.salePrice">
+<mat-card
+  class="product-card mat-elevation-z8"
+  *ngIf="selectedProduct$ | async as selectedProduct"
+>
+  <div class="sale-tag" *ngIf="selectedProduct.salePrice">
     <mat-icon class="sale-icon" color="accent">sell</mat-icon>
     <span class="sale-text">SALE</span>
   </div>
 
   <mat-card-header class="header">
     <mat-card-title class="title-wrapper"
-      >{{ (selectedProduct$ | async)?.name }}
+      >{{ selectedProduct.name }}
     </mat-card-title>
     <mat-card-subtitle>
       R
       {{
-        (selectedProduct$ | async)?.cost_in_credits ||
-          (selectedProduct$ | async)?.salePrice
+        selectedProduct.cost_in_credits || selectedProduct.salePrice
       }}</mat-card-subtitle
     >
   </mat-card-header>
   <img
     mat-card-image
     class="product-image"
-    [src]="(selectedProduct$ | async)?.image"
+    [src]="selectedProduct.image"
     alt="Product image"
   />
   <mat-card-content>
-    {{ (selectedProduct$ | async)?.model }}
+    {{ selectedProduct.model }}
   </mat-card-content>
 </mat-card>
 
-<div>
+<div *ngIf="selectedProduct$ | async as selectedProduct">
   <h1>Details:</h1>
-  <div>Name: {{ (selectedProduct$ | async)?.name }}</div>
-  <div>Model: {{ (selectedProduct$ | async)?.model }}</div>
-  <div>Manufacturer: {{ (selectedProduct$ | async)?.manufacturer }}</div>
-  <div>Length: {{ (selectedProduct$ | async)?.length }}</div>
+  <div>Name: {{ selectedProduct.name }}</div>
+  <div>Model: {{ selectedProduct.model }}</div>
+  <div>Manufacturer: {{ selectedProduct.manufacturer }}</div>
+  <div>Length: {{ selectedProduct.length }}</div>
   <div>
     Max Atmosphering Speed:
-    {{ (selectedProduct$ | async)?.max_atmosphering_speed }}
+    {{ selectedProduct.max_atmosphering_speed }}
   </div>
   <div>Crew: {{ (selectedProduct$ | async)?.crew }}</div>
   <div class="button-wrapper">
-    <button mat-raised-button color="primary">Add to cart</button>
-    <button mat-button color="primary">Remove from cart</button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="addToCart(selectedProduct); $event.stopPropagation()"
+    >
+      Add to cart
+    </button>
+    <button
+      mat-button
+      color="primary"
+      (click)="removeFromCart(selectedProduct.url); $event.stopPropagation()"
+    >
+      Remove from cart
+    </button>
   </div>
 </div>

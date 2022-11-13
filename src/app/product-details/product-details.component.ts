@@ -2,8 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatest, map } from 'rxjs';
 import * as fromRoot from 'src/app/core/ngrx/index';
-import { PLACEHOLDER_IMG } from '../core/consts/helpers';
-import { ProductImage, SaleProduct } from '../core/models/product.model';
+import {
+  CartProduct,
+  Product,
+  ProductImage,
+  SaleProduct,
+} from '../core/models/product.model';
+
+import {
+  PLACEHOLDER_IMG,
+  addToCart as addToCartHelperFunction,
+  removeFromToCart as removeFromCartHelperFunction,
+} from '../core/consts/helpers';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -37,10 +47,18 @@ export class ProductDetailsComponent implements OnInit {
                 +product.cost_in_credits *
                 (onSale.discount_percent / 100)
               ).toFixed(2)
-            : null,
+            : undefined,
           image: productImage ? productImage.image : PLACEHOLDER_IMG,
         };
       })
     );
+  }
+
+  addToCart(product: CartProduct) {
+    addToCartHelperFunction(product, this.store);
+  }
+
+  removeFromCart(url: string) {
+    removeFromCartHelperFunction(url, this.store);
   }
 }

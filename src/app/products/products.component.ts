@@ -17,6 +17,7 @@ import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
 import { FormControl } from '@angular/forms';
 import {
+  CartProduct,
   Product,
   ProductImage,
   SaleProduct,
@@ -111,11 +112,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
         .subscribe();
     }
   }
-  addToCart(
-    product: Product &
-      SaleProduct &
-      ProductImage & { salePrice: SaleProduct | undefined }
-  ) {
+  addToCart(product: CartProduct) {
     addToCartHelperFunction(product, this.store);
   }
 

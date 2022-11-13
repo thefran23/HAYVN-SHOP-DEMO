@@ -1,5 +1,10 @@
 import { createAction, props } from '@ngrx/store';
-import { Product, ProductImage, SaleProduct } from '../../models/product.model';
+import {
+  CartProduct,
+  Product,
+  ProductImage,
+  SaleProduct,
+} from '../../models/product.model';
 
 export const loadProducts = createAction(
   '[Products] Load Products',
@@ -63,9 +68,7 @@ export const setProductDetails = createAction(
 export const addToCart = createAction(
   '[Product] [NF] Add Product to Cart',
   props<{
-    product: Product &
-      SaleProduct &
-      ProductImage & { salePrice: SaleProduct | undefined };
+    product: CartProduct;
   }>()
 );
 

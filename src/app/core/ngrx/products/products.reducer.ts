@@ -1,6 +1,11 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { catchError } from 'rxjs';
-import { Product, ProductImage, SaleProduct } from '../../models/product.model';
+import {
+  CartProduct,
+  Product,
+  ProductImage,
+  SaleProduct,
+} from '../../models/product.model';
 import * as ProductsActions from './products.actions';
 
 export const productsFeatureKey = 'products';
@@ -9,9 +14,7 @@ export interface State {
   productsList: Product[];
   saleProducts: SaleProduct[];
   productImages: ProductImage[];
-  cart: (Product &
-    SaleProduct &
-    ProductImage & { salePrice: SaleProduct | undefined })[];
+  cart: CartProduct[];
   vehiclesNext: string;
   starshipsNext: string;
   selectedProduct: Product;

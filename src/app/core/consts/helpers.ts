@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import { Product, ProductImage, SaleProduct } from '../models/product.model';
+import { CartProduct } from '../models/product.model';
 import {
   addToCart as addToCartAction,
   removeFromCart,
@@ -13,12 +13,7 @@ export const routeParamToProductUrl = (routeParam: string) => {
   return SWAPI_BASE_URL + routeParam.replace('-', '/') + '/';
 };
 
-export const addToCart = (
-  product: Product &
-    SaleProduct &
-    ProductImage & { salePrice: SaleProduct | undefined },
-  store: Store
-) => {
+export const addToCart = (product: CartProduct, store: Store) => {
   store.dispatch(addToCartAction({ product }));
 };
 
