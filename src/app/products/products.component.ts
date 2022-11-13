@@ -2,12 +2,15 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   BehaviorSubject,
   combineLatest,
+  debounceTime,
+  distinctUntilChanged,
   map,
   startWith,
   Subject,
   Subscription,
   take,
   takeUntil,
+  tap,
 } from 'rxjs';
 import * as fromRoot from 'src/app/core/ngrx/index';
 import { Store } from '@ngrx/store';
@@ -21,7 +24,10 @@ import {
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import {
   addToCart,
+  loadProductDetailsSuccess,
   loadProducts,
+  loadProductsFailure,
+  loadProductsSuccess,
   removeFromCart,
   searchProducts,
 } from '../core/ngrx/products/products.actions';
@@ -39,6 +45,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   formCtrlSub!: Subscription;
   destroyed$: Subject<void> = new Subject<void>();
   productsToDisplay$ = this.getProductsToDisplay();
+  showLoader$ = new BehaviorSubject(true);
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -46,8 +53,30 @@ export class ProductsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.actions$
+      .pipe(
+        takeUntil(this.destroyed$),
+        ofType(loadProductsSuccess, loadProductsFailure)
+      )
+      .subscribe(() => {
+        this.showLoader$.next(false);
+      });
+
+    this.actions$
+      .pipe(takeUntil(this.destroyed$), ofType(loadProducts))
+      .subscribe(() => {
+        this.showLoader$.next(true);
+      });
+
     this.searchTermControl.valueChanges
-      .pipe(startWith(''), takeUntil(this.destroyed$))
+      .pipe(
+        startWith(''),
+        takeUntil(this.destroyed$),
+        tap(() => this.showLoader$.next(true)),
+
+        debounceTime(500),
+        distinctUntilChanged()
+      )
       .subscribe((searchTerm) => {
         if (searchTerm) {
           this.store.dispatch(searchProducts({ searchTerm }));
@@ -121,5 +150,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   clear() {
     this.searchTermControl.setValue('');
+    this.store.dispatch(loadProducts({}));
   }
 }

@@ -58,4 +58,9 @@
       alt="Product image"
     />
   </mat-card>
+  <mat-spinner
+    *ngIf="showLoader$ | async"
+    class="loader"
+    color="accent"
+  ></mat-spinner>
 </cdk-virtual-scroll-viewport>

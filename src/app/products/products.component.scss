@@ -1,5 +1,12 @@
 .products-viewport {
   height: calc(100vh - 150px);
+  position: relative;
+}
+
+.loader {
+  position: sticky;
+  bottom: 0;
+  left: 45%
 }
 
 .product-card {
