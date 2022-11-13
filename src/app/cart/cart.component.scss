@@ -2,6 +2,8 @@
     margin: 32px;
     min-height: 400px;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .product-thumb {
@@ -21,4 +23,10 @@
     gap: 16px;
     align-items: center;
     height: 50px;
+}
+
+.content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
 }

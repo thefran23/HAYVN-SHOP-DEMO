@@ -14,7 +14,9 @@ export const routeParamToProductUrl = (routeParam: string) => {
 };
 
 export const addToCart = (
-  product: Product & SaleProduct & ProductImage,
+  product: Product &
+    SaleProduct &
+    ProductImage & { salePrice: SaleProduct | undefined },
   store: Store
 ) => {
   store.dispatch(addToCartAction({ product }));

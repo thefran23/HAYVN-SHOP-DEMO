@@ -9,7 +9,9 @@ export interface State {
   productsList: Product[];
   saleProducts: SaleProduct[];
   productImages: ProductImage[];
-  cart: (Product & SaleProduct & ProductImage)[];
+  cart: (Product &
+    SaleProduct &
+    ProductImage & { salePrice: SaleProduct | undefined })[];
   vehiclesNext: string;
   starshipsNext: string;
   selectedProduct: Product;

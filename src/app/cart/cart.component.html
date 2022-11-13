@@ -1,6 +1,6 @@
 <mat-card class="cart-card mat-elevation-z8">
-  <mat-card-header>Items in Cart</mat-card-header>
-  <mat-card-content>
+  <h1>Cart:</h1>
+  <mat-card-content class="content">
     <div *ngFor="let item of cartItemsToDisplay$ | async">
       <div class="cart-item">
         <img
@@ -10,8 +10,15 @@
           alt="Product image"
         />
         <div>{{ item.name }}</div>
+        <div>
+          {{
+            (item.salePrice ? +item.salePrice : +item.cost_in_credits)
+              | currency
+          }}
+        </div>
       </div>
     </div>
+    <div *ngIf="(cartItemsToDisplay$ | async)?.length === 0">Cart is empty</div>
   </mat-card-content>
   <h1>TOTAL : {{ total$ | async | currency }}</h1>
 </mat-card>

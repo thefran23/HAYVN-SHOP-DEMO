@@ -62,7 +62,11 @@ export const setProductDetails = createAction(
 
 export const addToCart = createAction(
   '[Product] [NF] Add Product to Cart',
-  props<{ product: Product & SaleProduct & ProductImage }>()
+  props<{
+    product: Product &
+      SaleProduct &
+      ProductImage & { salePrice: SaleProduct | undefined };
+  }>()
 );
 
 export const removeFromCart = createAction(

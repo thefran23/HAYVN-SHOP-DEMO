@@ -111,7 +111,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
         .subscribe();
     }
   }
-  addToCart(product: Product & SaleProduct & ProductImage) {
+  addToCart(
+    product: Product &
+      SaleProduct &
+      ProductImage & { salePrice: SaleProduct | undefined }
+  ) {
     addToCartHelperFunction(product, this.store);
   }
 
