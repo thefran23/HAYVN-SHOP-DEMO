@@ -11,45 +11,34 @@
     <mat-icon>close</mat-icon>
   </button>
 </mat-form-field>
-
+<!-- Using virtual scrolling since we are anticipating a very big number of elements -->
 <cdk-virtual-scroll-viewport
   appendOnly
-  itemSize="316"
+  itemSize="366"
   class="products-viewport"
   (scrolledIndexChange)="scrollEvent()"
 >
   <mat-card
     *cdkVirtualFor="let product of productsToDisplay$ | async"
     class="product-card"
+    [class.mat-elevation-z8]="product.salePrice"
     [routerLink]="
       product.url
         .substring(product.url.indexOf('/api/') + 5, product.url.length - 1)
         .replace('/', '-')
     "
   >
-    <mat-card-header>
-      <mat-card-title
-        >{{ product.name }}
-        <button
-          mat-icon-button
-          color="primary"
-          (click)="addToCart(product); $event.stopPropagation()"
-        >
-          <mat-icon>add</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          color="primary"
-          (click)="removeFromCart(product.url); $event.stopPropagation()"
-        >
-          <mat-icon>remove</mat-icon>
-        </button>
-      </mat-card-title>
-      <mat-card-subtitle
-        >{{ product.cost_in_credits }} SALE PRICE !!!!!!!! ={{
-          product.salePrice
-        }}</mat-card-subtitle
-      >
+    <div class="sale-tag" *ngIf="product.salePrice">
+      <mat-icon class="sale-icon" color="accent">sell</mat-icon>
+      <span class="sale-text">SALE</span>
+    </div>
+
+    <mat-card-header class="header">
+      <mat-card-title class="title-wrapper">{{ product.name }} </mat-card-title>
+      <mat-card-subtitle>{{
+        ((product.salePrice ? product.salePrice : product.cost_in_credits)
+          | currency) || 'price unknown'
+      }}</mat-card-subtitle>
     </mat-card-header>
     <img
       mat-card-image
@@ -57,6 +46,26 @@
       [src]="product.image"
       alt="Product image"
     />
+    <mat-card-content>
+      {{ product.model }}
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        [disabled]="product.cost_in_credits === 'unknown'"
+        mat-raised-button
+        color="primary"
+        (click)="addToCart(product); $event.stopPropagation()"
+      >
+        Add to cart
+      </button>
+      <button
+        mat-button
+        color="primary"
+        (click)="removeFromCart(product.url); $event.stopPropagation()"
+      >
+        Remove from cart
+      </button>
+    </mat-card-actions>
   </mat-card>
   <mat-spinner
     *ngIf="showLoader$ | async"

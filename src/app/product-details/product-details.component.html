@@ -1,1 +1,45 @@
-<p>product-details works!</p>
+<mat-card class="product-card mat-elevation-z8">
+  <div class="sale-tag" *ngIf="(selectedProduct$ | async)?.salePrice">
+    <mat-icon class="sale-icon" color="accent">sell</mat-icon>
+    <span class="sale-text">SALE</span>
+  </div>
+
+  <mat-card-header class="header">
+    <mat-card-title class="title-wrapper"
+      >{{ (selectedProduct$ | async)?.name }}
+    </mat-card-title>
+    <mat-card-subtitle>
+      R
+      {{
+        (selectedProduct$ | async)?.cost_in_credits ||
+          (selectedProduct$ | async)?.salePrice
+      }}</mat-card-subtitle
+    >
+  </mat-card-header>
+  <img
+    mat-card-image
+    class="product-image"
+    [src]="(selectedProduct$ | async)?.image"
+    alt="Product image"
+  />
+  <mat-card-content>
+    {{ (selectedProduct$ | async)?.model }}
+  </mat-card-content>
+</mat-card>
+
+<div>
+  <h1>Details:</h1>
+  <div>Name: {{ (selectedProduct$ | async)?.name }}</div>
+  <div>Model: {{ (selectedProduct$ | async)?.model }}</div>
+  <div>Manufacturer: {{ (selectedProduct$ | async)?.manufacturer }}</div>
+  <div>Length: {{ (selectedProduct$ | async)?.length }}</div>
+  <div>
+    Max Atmosphering Speed:
+    {{ (selectedProduct$ | async)?.max_atmosphering_speed }}
+  </div>
+  <div>Crew: {{ (selectedProduct$ | async)?.crew }}</div>
+  <div class="button-wrapper">
+    <button mat-raised-button color="primary">Add to cart</button>
+    <button mat-button color="primary">Remove from cart</button>
+  </div>
+</div>

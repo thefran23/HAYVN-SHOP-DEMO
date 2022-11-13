@@ -1,6 +1,10 @@
 <mat-toolbar color="primary" class="toolbar">
-  <div>HAYVN SHOP - Demo by Francois Rossouw</div>
-  <div>
+  <mat-icon routerLink="/products" *ngIf="showArrow$ | async"
+    >arrow_back</mat-icon
+  >
+  HAYVN SHOP - Demo by Francois Rossouw
+
+  <div routerLink="/cart">
     <span>{{ cartItemsCount$ | async }}</span>
     <mat-icon>shopping_cart</mat-icon>
   </div>

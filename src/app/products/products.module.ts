@@ -6,9 +6,10 @@ import { ProductsRoutingModule } from './products-routing.module';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 import { MaterialModule } from '../material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CartComponent } from '../cart/cart.component';
 
 @NgModule({
-  declarations: [ProductsComponent, ProductDetailsComponent],
+  declarations: [ProductsComponent, ProductDetailsComponent, CartComponent],
   imports: [
     CommonModule,
     ProductsRoutingModule,

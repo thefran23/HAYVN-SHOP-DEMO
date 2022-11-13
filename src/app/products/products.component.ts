@@ -31,7 +31,11 @@ import {
   removeFromCart,
   searchProducts,
 } from '../core/ngrx/products/products.actions';
-import { PLACEHOLDER_IMG } from '../core/consts/helpers';
+import {
+  PLACEHOLDER_IMG,
+  addToCart as addToCartHelperFunction,
+  removeFromToCart as removeFromCartHelperFunction,
+} from '../core/consts/helpers';
 
 @Component({
   selector: 'app-products',
@@ -49,7 +53,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<fromRoot.State>,
-    private actions$: Actions // private router: Router
+    private actions$: Actions
   ) {}
 
   ngOnInit(): void {
@@ -108,12 +112,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
         .subscribe();
     }
   }
-  addToCart(product: Product) {
-    this.store.dispatch(addToCart({ product }));
+  addToCart(product: Product & SaleProduct & ProductImage) {
+    addToCartHelperFunction(product, this.store);
   }
 
   removeFromCart(url: string) {
-    this.store.dispatch(removeFromCart({ url }));
+    removeFromCartHelperFunction(url, this.store);
   }
 
   getProductsToDisplay() {

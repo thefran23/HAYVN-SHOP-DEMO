@@ -9,7 +9,7 @@ export interface State {
   productsList: Product[];
   saleProducts: SaleProduct[];
   productImages: ProductImage[];
-  cart: Product[];
+  cart: (Product & SaleProduct & ProductImage)[];
   vehiclesNext: string;
   starshipsNext: string;
   selectedProduct: Product;
@@ -55,7 +55,7 @@ export const reducer = createReducer(
     };
   }),
   on(ProductsActions.setProductDetails, (state, { product }) => {
-    return { ...state, productDetails: product };
+    return { ...state, selectedProduct: product };
   }),
 
   on(ProductsActions.addToCart, (state, { product }) => {
@@ -77,7 +77,7 @@ export const reducer = createReducer(
   }),
 
   on(ProductsActions.loadProductDetailsSuccess, (state, { product }) => {
-    return { ...state, productDetails: product };
+    return { ...state, selectedProduct: product };
   }),
   on(ProductsActions.loadProductsFailure, (state, action) => state)
 );

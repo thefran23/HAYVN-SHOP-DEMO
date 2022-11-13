@@ -14,6 +14,8 @@ import { routeParamToProductUrl } from '../core/consts/helpers';
 
 import {
   loadProductDetails,
+  loadProductImages,
+  loadSaleProducts,
   setProductDetails,
 } from '../core/ngrx/products/products.actions';
 
@@ -41,13 +43,15 @@ export class ProductDetailsResolver implements Resolve<boolean> {
         }
         // If the product does not exist in state, we have to fetch it (I.e the user was deep linked to the details view page)
         return of(true).pipe(
-          tap(() =>
+          tap(() => {
             this.store.dispatch(
               loadProductDetails({
                 url: paramProductUrl,
               })
-            )
-          )
+            );
+            this.store.dispatch(loadSaleProducts());
+            this.store.dispatch(loadProductImages());
+          })
         );
       })
     );
