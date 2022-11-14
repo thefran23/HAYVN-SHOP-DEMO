@@ -5,6 +5,7 @@ import {
   debounceTime,
   distinctUntilChanged,
   map,
+  skip,
   startWith,
   Subject,
   Subscription,
@@ -75,7 +76,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
     this.searchTermControl.valueChanges
       .pipe(
-        startWith(''),
+        skip(1),
         takeUntil(this.destroyed$),
         debounceTime(500),
         distinctUntilChanged()
@@ -84,6 +85,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
         if (searchTerm) {
           this.showLoader$.next(true);
           this.store.dispatch(searchProducts({ searchTerm }));
+        } else {
+          this.showLoader$.next(true);
+          this.store.dispatch(loadProducts({}));
         }
       });
   }

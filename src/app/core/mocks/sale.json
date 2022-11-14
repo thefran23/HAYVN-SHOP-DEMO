@@ -2,6 +2,26 @@
     {
         "url": "https://swapi.dev/api/starships/2/",
         "discount_percent": 25,
-        "valid_until": "2023-12-20T21:30:21.661000Z"
+        "valid_until": "2022-12-20T00:00:00.000000Z"
+    },
+    {
+        "url": "https://swapi.dev/api/starships/3/",
+        "discount_percent": 10,
+        "valid_until": "2022-12-20T00:00:00.000000Z"
+    },
+    {
+        "url": "https://swapi.dev/api/starships/10/",
+        "discount_percent": 20,
+        "valid_until": "2022-11-15T00:00:00.000000Z"
+    },
+    {
+        "url": "https://swapi.dev/api/vehicles/25/",
+        "discount_percent": 30,
+        "valid_until": "2023-12-20T00:00:00.000000Z"
+    },
+    {
+        "url": "https://swapi.dev/api/vehicles/19/",
+        "discount_percent": 25,
+        "valid_until": "2023-12-20T00:00:00.000000Z"
     }
 ]
