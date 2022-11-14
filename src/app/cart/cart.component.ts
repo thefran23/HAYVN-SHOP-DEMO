@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as fromRoot from 'src/app/core/ngrx/index';
 import { Store } from '@ngrx/store';
-import { combineLatest, map } from 'rxjs';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-cart',

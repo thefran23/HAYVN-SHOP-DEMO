@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatest, map } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Subject, takeUntil } from 'rxjs';
 import * as fromRoot from 'src/app/core/ngrx/index';
 import {
   CartProduct,
-  Product,
   ProductImage,
   SaleProduct,
 } from '../core/models/product.model';
@@ -14,16 +13,48 @@ import {
   addToCart as addToCartHelperFunction,
   removeFromToCart as removeFromCartHelperFunction,
 } from '../core/consts/helpers';
+import { Actions, ofType } from '@ngrx/effects';
+import {
+  loadProductDetails,
+  loadProductDetailsFailure,
+  loadProductDetailsSuccess,
+} from '../core/ngrx/products/products.actions';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss'],
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
   selectedProduct$ = this.getSelectedProductToDisplay();
-  constructor(private store: Store<fromRoot.State>) {}
+  showLoader$ = new BehaviorSubject(false);
+  destroyed$: Subject<void> = new Subject<void>();
 
-  ngOnInit(): void {}
+  constructor(
+    private store: Store<fromRoot.State>,
+    private actions$: Actions
+  ) {}
+
+  ngOnInit(): void {
+    this.actions$
+      .pipe(takeUntil(this.destroyed$), ofType(loadProductDetails))
+      .subscribe(() => {
+        this.showLoader$.next(true);
+      });
+
+    this.actions$
+      .pipe(
+        takeUntil(this.destroyed$),
+        ofType(loadProductDetailsSuccess, loadProductDetailsFailure)
+      )
+      .subscribe(() => {
+        this.showLoader$.next(false);
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
 
   getSelectedProductToDisplay() {
     return combineLatest([

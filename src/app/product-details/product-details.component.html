@@ -1,58 +1,66 @@
-<mat-card
-  class="product-card mat-elevation-z8"
-  *ngIf="selectedProduct$ | async as selectedProduct"
->
-  <div class="sale-tag" *ngIf="selectedProduct.salePrice">
-    <mat-icon class="sale-icon" color="accent">sell</mat-icon>
-    <span class="sale-text">SALE</span>
-  </div>
+<div class="wrapper" *ngIf="!(showLoader$ | async)">
+  <mat-card
+    class="product-card mat-elevation-z8"
+    *ngIf="selectedProduct$ | async as selectedProduct"
+  >
+    <div class="sale-tag" *ngIf="selectedProduct.salePrice">
+      <mat-icon class="sale-icon" color="accent">sell</mat-icon>
+      <span class="sale-text">SALE</span>
+    </div>
 
-  <mat-card-header class="header">
-    <mat-card-title class="title-wrapper"
-      >{{ selectedProduct.name }}
-    </mat-card-title>
-    <mat-card-subtitle>
-      {{
-        selectedProduct.salePrice || selectedProduct.cost_in_credits | currency
-      }}</mat-card-subtitle
-    >
-  </mat-card-header>
-  <img
-    mat-card-image
-    class="product-image"
-    [src]="selectedProduct.image"
-    alt="Product image"
-  />
-  <mat-card-content>
-    {{ selectedProduct.model }}
-  </mat-card-content>
-</mat-card>
+    <mat-card-header class="header">
+      <mat-card-title class="title-wrapper"
+        >{{ selectedProduct.name }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{
+          selectedProduct.salePrice || selectedProduct.cost_in_credits
+            | currency
+        }}</mat-card-subtitle
+      >
+    </mat-card-header>
+    <img
+      mat-card-image
+      class="product-image"
+      [src]="selectedProduct.image"
+      alt="Product image"
+    />
+    <mat-card-content>
+      {{ selectedProduct.model }}
+    </mat-card-content>
+  </mat-card>
 
-<div *ngIf="selectedProduct$ | async as selectedProduct">
-  <h1>Details:</h1>
-  <div>Name: {{ selectedProduct.name }}</div>
-  <div>Model: {{ selectedProduct.model }}</div>
-  <div>Manufacturer: {{ selectedProduct.manufacturer }}</div>
-  <div>Length: {{ selectedProduct.length }}</div>
-  <div>
-    Max Atmosphering Speed:
-    {{ selectedProduct.max_atmosphering_speed }}
-  </div>
-  <div>Crew: {{ (selectedProduct$ | async)?.crew }}</div>
-  <div class="button-wrapper">
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="addToCart(selectedProduct); $event.stopPropagation()"
-    >
-      Add to cart
-    </button>
-    <button
-      mat-button
-      color="primary"
-      (click)="removeFromCart(selectedProduct.url); $event.stopPropagation()"
-    >
-      Remove from cart
-    </button>
+  <div *ngIf="selectedProduct$ | async as selectedProduct">
+    <h1>Details:</h1>
+    <div>Name: {{ selectedProduct.name }}</div>
+    <div>Model: {{ selectedProduct.model }}</div>
+    <div>Manufacturer: {{ selectedProduct.manufacturer }}</div>
+    <div>Length: {{ selectedProduct.length }}</div>
+    <div>
+      Max Atmosphering Speed:
+      {{ selectedProduct.max_atmosphering_speed }}
+    </div>
+    <div>Crew: {{ (selectedProduct$ | async)?.crew }}</div>
+    <div class="button-wrapper">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addToCart(selectedProduct); $event.stopPropagation()"
+      >
+        Add to cart
+      </button>
+      <button
+        mat-button
+        color="primary"
+        (click)="removeFromCart(selectedProduct.url); $event.stopPropagation()"
+      >
+        Remove from cart
+      </button>
+    </div>
   </div>
 </div>
+<mat-spinner
+  *ngIf="showLoader$ | async"
+  class="loader"
+  color="accent"
+></mat-spinner>
