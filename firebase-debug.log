@@ -1,0 +1,39 @@
+[debug] [2022-11-14T05:45:08.220Z] ----------------------------------------------------------------------
+[debug] [2022-11-14T05:45:08.222Z] Command:       /usr/local/bin/firebase /Users/francoisrossouw/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase deploy
+[debug] [2022-11-14T05:45:08.222Z] CLI Version:   11.16.0
+[debug] [2022-11-14T05:45:08.222Z] Platform:      darwin
+[debug] [2022-11-14T05:45:08.222Z] Node Version:  v16.16.0
+[debug] [2022-11-14T05:45:08.242Z] Time:          Mon Nov 14 2022 07:45:08 GMT+0200 (South Africa Standard Time)
+[debug] [2022-11-14T05:45:08.243Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-11-14T05:45:08.361Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-11-14T05:45:08.363Z] > authorizing via signed-in user (fr4ncois1010@gmail.com)
+[debug] [2022-11-14T05:45:08.364Z] [iam] checking project hayvn-shop-demo for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-11-14T05:45:08.367Z] > refreshing access token with scopes: []
+[debug] [2022-11-14T05:45:08.368Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2022-11-14T05:45:08.369Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-11-14T05:45:09.086Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2022-11-14T05:45:09.089Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-11-14T05:45:09.134Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/hayvn-shop-demo:testIamPermissions [none]
+[debug] [2022-11-14T05:45:09.137Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/hayvn-shop-demo:testIamPermissions x-goog-quota-user=projects/hayvn-shop-demo
+[debug] [2022-11-14T05:45:09.138Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/hayvn-shop-demo:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-11-14T05:45:11.089Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/hayvn-shop-demo:testIamPermissions 200
+[debug] [2022-11-14T05:45:11.092Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/hayvn-shop-demo:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-11-14T05:45:11.095Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/hayvn-shop-demo [none]
+[debug] [2022-11-14T05:45:11.781Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/hayvn-shop-demo 200
+[debug] [2022-11-14T05:45:11.784Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/hayvn-shop-demo {"projectId":"hayvn-shop-demo","projectNumber":"381263922844","displayName":"hayvn-shop-demo","name":"projects/hayvn-shop-demo","resources":{"hostingSite":"hayvn-shop-demo"},"state":"ACTIVE","etag":"1_f078b8f5-794e-44d4-b53c-d96258f36b1c"}
+[info] 
+[info] === Deploying to 'hayvn-shop-demo'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2022-11-14T05:45:11.799Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/hayvn-shop-demo/versions [none]
+[debug] [2022-11-14T05:45:11.801Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/hayvn-shop-demo/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2022-11-14T05:45:14.192Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/hayvn-shop-demo/versions 200
+[debug] [2022-11-14T05:45:14.193Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/hayvn-shop-demo/versions {"name":"projects/381263922844/sites/hayvn-shop-demo/versions/6f6df630ea63fa59","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[hayvn-shop-demo]: beginning deploy... 
+[info] i  hosting[hayvn-shop-demo]: found 8 files in dist 
+[debug] [2022-11-14T05:45:14.211Z] [hosting] uploading with 200 concurrency
+[debug] [2022-11-14T05:45:14.219Z] [hosting] hash cache [ZGlzdA] stored for 8 files
+[debug] [2022-11-14T05:45:14.219Z] [hosting][hash queue][FINAL] {"max":1,"min":0,"avg":0,"active":0,"complete":8,"success":8,"errored":0,"retried":0,"total":8,"elapsed":3}
+[debug] [2022-11-14T05:45:14.220Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/381263922844/sites/hayvn-shop-demo/versions/6f6df630ea63fa59:populateFiles [none]
+[debug] [2022-11-14T05:45:14.221Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/381263922844/sites/hayvn-shop-demo/versions/6f6df630ea63fa59:populateFiles {"files":{"/3rdpartylicenses.txt":"9527e571ecbbc6fc66cd619f9f443d70ae9f4111209b95d1e48a1612581b1c7d","/480.b2009fc9891732cb.js":"bd259788f7749d9ea318d45aa653d40d6747b1ca0e0ff04993f25772c227a79d","/favicon.ico":"a2aee5309d0b59b9b66384ccc3969a07fab1b320d0bf76f1b25047a051d7f774","/index.html":"e7ec7dfc17f500bb29c554c71e61c990a5a7e05a0b35ee7c53930112cfcd1c6a","/main.03a727111e2c9c32.js":"a9f646b840c045444b7500031a92d4a458ac91091fe92d18aa10282ca592cccd","/polyfills.e1d1f9e2b9cf6f09.js":"f23ca23b9a38ccea501639e7be7f4192b1424c70c2f85d9994744644360bc4b4","/runtime.3f035f621b84f14b.js":"b89496ba702aec6f36972998f34222a39ca34b0479089441f7b3476fdcb6e599","/styles.252407e5220450de.css":"a7da9cf70a74017c3c1e9e658d8e955e7744d17db48af226ce296a2a0391bd35"}}
