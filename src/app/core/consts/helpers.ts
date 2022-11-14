@@ -4,6 +4,7 @@ import {
   addToCart as addToCartAction,
   removeFromCart,
 } from '../../core/ngrx/products/products.actions';
+import { MatSnackBarConfig } from '@angular/material/snack-bar';
 export const SWAPI_BASE_URL = 'https://swapi.dev/api/';
 
 export const PLACEHOLDER_IMG =
@@ -20,3 +21,12 @@ export const addToCart = (product: CartProduct, store: Store) => {
 export const removeFromToCart = (url: string, store: Store) => {
   store.dispatch(removeFromCart({ url }));
 };
+
+export const errorConfig: MatSnackBarConfig = {
+  duration: 5000,
+  horizontalPosition: 'right',
+  verticalPosition: 'top',
+  panelClass: 'g-error-panel',
+};
+
+export const genericErrorMsg = 'Something unexpected happened';

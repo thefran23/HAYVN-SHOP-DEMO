@@ -1,10 +1,11 @@
 import { ProductsService } from '../../services/products.service';
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
-import { catchError, map, concatMap, mergeMap, tap } from 'rxjs/operators';
-import { Observable, EMPTY, of } from 'rxjs';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, concatMap, mergeMap } from 'rxjs/operators';
 
 import * as ProductActions from './products.actions';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { errorConfig, genericErrorMsg } from '../../consts/helpers';
 
 @Injectable()
 export class ProductsEffects {
@@ -17,7 +18,6 @@ export class ProductsEffects {
           .getProducts(payload.vehiclesUrl, payload.starshipsUrl)
           .pipe(
             mergeMap((res) => {
-              console.log('res ', res);
               return [
                 ProductActions.loadProductsSuccess({
                   products: res.results,
@@ -30,6 +30,7 @@ export class ProductsEffects {
       }),
       catchError((error) => {
         console.error(error);
+        this.snackbar.open(genericErrorMsg, '×', errorConfig);
         return [ProductActions.loadProductsFailure()];
       })
     )
@@ -52,6 +53,7 @@ export class ProductsEffects {
       }),
       catchError((error) => {
         console.error(error);
+        this.snackbar.open(genericErrorMsg, '×', errorConfig);
         return [ProductActions.loadProductsFailure()];
       })
     )
@@ -73,6 +75,7 @@ export class ProductsEffects {
       }),
       catchError((error) => {
         console.error(error);
+        this.snackbar.open(genericErrorMsg, '×', errorConfig);
         return [ProductActions.loadProductImagesFailure()];
       })
     )
@@ -81,12 +84,10 @@ export class ProductsEffects {
   searchProducts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProductActions.searchProducts),
-      // Using mergemap to prevent unnecesary requetss when searching
+      // Using mergeMap to prevent unnecessary requests when searching
       mergeMap((payload) => {
-        console.log('pl ', payload);
         return this.productsService.searchProducts(payload.searchTerm).pipe(
           mergeMap((res) => {
-            console.log('res ', res);
             return [
               ProductActions.loadProductsSuccess({
                 products: res.results,
@@ -99,6 +100,7 @@ export class ProductsEffects {
       }),
       catchError((error) => {
         console.error(error);
+        this.snackbar.open(genericErrorMsg, '×', errorConfig);
         return [ProductActions.loadProductsFailure()];
       })
     )
@@ -107,7 +109,7 @@ export class ProductsEffects {
   loadProductDetails$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProductActions.loadProductDetails),
-      // Using mergemap to cancel prev requests
+      // Using mergeMap to cancel prev requests
       mergeMap((payload) => {
         return this.productsService.getProduct(payload.url).pipe(
           mergeMap((product) => {
@@ -117,6 +119,7 @@ export class ProductsEffects {
       }),
       catchError((error) => {
         console.error(error);
+        this.snackbar.open(genericErrorMsg, '×', errorConfig);
         return [ProductActions.loadProductDetailsFailure()];
       })
     )
@@ -124,6 +127,7 @@ export class ProductsEffects {
 
   constructor(
     private actions$: Actions,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private snackbar: MatSnackBar
   ) {}
 }
