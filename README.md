@@ -1,4 +1,4 @@
-# CCI Github client demo By Francois Rossouw
+# HAYVN demo By Francois Rossouw
 
 NB - This project is hosted for your convenience:  
 [https://hayvn-shop-demo.web.app/](https://hayvn-shop-demo.web.app/)
