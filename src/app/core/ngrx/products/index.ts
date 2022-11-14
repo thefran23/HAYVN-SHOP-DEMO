@@ -1,5 +1,4 @@
 import * as productsActions from './products.actions';
-import * as productsSelectors from './products.selectors';
 
 import {
   productsFeatureKey,
@@ -7,10 +6,4 @@ import {
   reducer as productsReducer,
 } from './products.reducer';
 
-export {
-  productsActions,
-  productsSelectors,
-  productsFeatureKey,
-  productsState,
-  productsReducer,
-};
+export { productsActions, productsFeatureKey, productsState, productsReducer };
