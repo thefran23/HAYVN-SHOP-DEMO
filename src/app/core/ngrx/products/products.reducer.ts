@@ -18,6 +18,7 @@ export interface State {
   vehiclesNext: string;
   starshipsNext: string;
   selectedProduct: Product;
+  searchTerm: string;
 }
 
 export const initialState: State = {
@@ -28,6 +29,7 @@ export const initialState: State = {
   vehiclesNext: '',
   starshipsNext: '',
   selectedProduct: {} as Product,
+  searchTerm: '',
 };
 
 export const reducer = createReducer(
@@ -84,5 +86,9 @@ export const reducer = createReducer(
   on(ProductsActions.loadProductDetailsSuccess, (state, { product }) => {
     return { ...state, selectedProduct: product };
   }),
-  on(ProductsActions.loadProductsFailure, (state, action) => state)
+  on(ProductsActions.loadProductsFailure, (state, action) => state),
+
+  on(ProductsActions.setSearchTerm, (state, { searchTerm }) => {
+    return { ...state, searchTerm };
+  })
 );

@@ -32,6 +32,7 @@ import {
   loadProductsSuccess,
   removeFromCart,
   searchProducts,
+  setSearchTerm,
 } from '../core/ngrx/products/products.actions';
 import {
   PLACEHOLDER_IMG,
@@ -59,6 +60,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.store
+      .select((s) => s.products.searchTerm)
+      .pipe(take(1))
+      .subscribe((value) => {
+        this.searchTermControl.setValue(value);
+      });
+
     this.actions$
       .pipe(
         takeUntil(this.destroyed$),
@@ -82,6 +90,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
         distinctUntilChanged()
       )
       .subscribe((searchTerm) => {
+        this.store.dispatch(setSearchTerm({ searchTerm }));
         if (searchTerm) {
           this.showLoader$.next(true);
           this.store.dispatch(searchProducts({ searchTerm }));

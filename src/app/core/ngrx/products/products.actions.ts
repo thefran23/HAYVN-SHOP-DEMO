@@ -91,4 +91,11 @@ export const loadProductDetailsFailure = createAction(
   '[ProductDetails] Load ProductDetails Failure'
 );
 
+export const setSearchTerm = createAction(
+  '[Products] [NF] Set Search Term',
+  props<{
+    searchTerm: string;
+  }>()
+);
+
 export const clearProducts = createAction('[Products NF] Clear Products');
