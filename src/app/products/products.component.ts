@@ -149,6 +149,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
                   (onSale.discount_percent / 100)
                 ).toFixed(2)
               : null,
+            discount_percent: onSale ? onSale.discount_percent : null,
             image: productImage ? productImage.image : PLACEHOLDER_IMG,
           };
         });

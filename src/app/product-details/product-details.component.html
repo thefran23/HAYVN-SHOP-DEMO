@@ -12,9 +12,8 @@
       >{{ selectedProduct.name }}
     </mat-card-title>
     <mat-card-subtitle>
-      R
       {{
-        selectedProduct.cost_in_credits || selectedProduct.salePrice
+        selectedProduct.salePrice || selectedProduct.cost_in_credits | currency
       }}</mat-card-subtitle
     >
   </mat-card-header>

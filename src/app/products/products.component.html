@@ -38,6 +38,11 @@
       <mat-card-subtitle>
         <span *ngIf="product.cost_in_credits !== 'unknown'">
           {{
+            product.discount_percent
+              ? product.discount_percent + '% off, now only:'
+              : ''
+          }}
+          {{
             (product.salePrice ? product.salePrice : product.cost_in_credits)
               | currency
           }}
