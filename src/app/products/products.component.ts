@@ -67,6 +67,15 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.searchTermControl.setValue(value);
       });
 
+    this.store
+      .select((s) => s.products.productsList)
+      .pipe(take(1))
+      .subscribe((products) => {
+        if (!products.length) {
+          this.showLoader$.next(true);
+        }
+      });
+
     this.actions$
       .pipe(
         takeUntil(this.destroyed$),
