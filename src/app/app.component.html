@@ -1,13 +1,13 @@
 <mat-toolbar color="primary" class="toolbar">
   <div class="header-wrapper">
-    <mat-icon routerLink="/products" *ngIf="showArrow$ | async"
+    <mat-icon class="pointer" routerLink="/products" *ngIf="showArrow$ | async"
       >arrow_back</mat-icon
     >
     <mat-icon *ngIf="!(showArrow$ | async)">rocket_launch</mat-icon>
     <div>HAYVN SHOP - Demo by Francois Rossouw</div>
   </div>
 
-  <div routerLink="/cart">
+  <div routerLink="/cart" class="pointer">
     <span>{{ cartItemsCount$ | async }}</span>
     <mat-icon>shopping_cart</mat-icon>
   </div>
