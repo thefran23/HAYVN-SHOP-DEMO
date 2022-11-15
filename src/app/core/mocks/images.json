@@ -1,27 +1,27 @@
 [
     {
-        "url": "https://swapi.dev/api/starships/2/",
+        "url": "https://swapi.py4e.com/api/starships/2/",
         "image": "https://www.shutterstock.com/image-illustration/spaceship-alien-ufo-spacecraft-flight-600w-1931811737.jpg"
     
     },
     {
-    "url": "https://swapi.dev/api/starships/3/",
+    "url": "https://swapi.py4e.com/api/starships/3/",
     "image": "https://laughingsquid.com/wp-content/uploads/2019/09/LEGO-Star-Wars-Imperial-Star-Destroyer-2.jpg"
     },{
-        "url": "https://swapi.dev/api/starships/5/",
+        "url": "https://swapi.py4e.com/api/starships/5/",
         "image": "https://cdna.artstation.com/p/assets/images/images/019/160/250/large/alexander-ivanov-sent-7.jpg"
     },
 
     {
-        "url": "https://swapi.dev/api/starships/9/",
+        "url": "https://swapi.py4e.com/api/starships/9/",
         "image": "https://w7.pngwing.com/pngs/200/506/png-transparent-wall-decal-sticker-mural-death-star-miscellaneous-poster-interior-design-services.png"
     },
     {
-        "url": "https://swapi.dev/api/starships/10/",
+        "url": "https://swapi.py4e.com/api/starships/10/",
         "image": "https://upload.wikimedia.org/wikipedia/en/8/8d/A_screenshot_from_Star_Wars_Episode_IV_A_New_Hope_depicting_the_Millennium_Falcon.jpg"
     },
     {
-        "url": "https://swapi.dev/api/starships/11/",
+        "url": "https://swapi.py4e.com/api/starships/11/",
         "image": "https://static.wikia.nocookie.net/starwars/images/b/bf/Y-wing_2.png"
     }
 

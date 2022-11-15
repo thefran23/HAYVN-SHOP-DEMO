@@ -12,11 +12,11 @@ export class ProductsService {
 
   getProducts(vehiclesUrl?: string, starshipsUrl?: string) {
     const starships = this.http.get<{ results: Product[]; next: string }>(
-      starshipsUrl || 'https://swapi.dev/api/starships'
+      starshipsUrl || 'https://swapi.py4e.com/api/starships'
     );
 
     const vehicles = this.http.get<{ results: Product[]; next: string }>(
-      vehiclesUrl || 'https://swapi.dev/api/vehicles'
+      vehiclesUrl || 'https://swapi.py4e.com/api/vehicles'
     );
 
     const products: Observable<{
@@ -38,11 +38,11 @@ export class ProductsService {
   searchProducts(searchTerm: string) {
     console.log('in service ', searchTerm);
     const starships = this.http.get<{ results: Product[]; next: string }>(
-      `https://swapi.dev/api/starships/?search=${searchTerm}`
+      `https://swapi.py4e.com/api/starships/?search=${searchTerm}`
     );
 
     const vehicles = this.http.get<{ results: Product[]; next: string }>(
-      `https://swapi.dev/api/vehicles/?search=${searchTerm}`
+      `https://swapi.py4e.com/api/vehicles/?search=${searchTerm}`
     );
 
     const products: Observable<{

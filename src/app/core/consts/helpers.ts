@@ -5,7 +5,7 @@ import {
   removeFromCart,
 } from '../../core/ngrx/products/products.actions';
 import { MatSnackBarConfig } from '@angular/material/snack-bar';
-export const SWAPI_BASE_URL = 'https://swapi.dev/api/';
+export const SWAPI_BASE_URL = 'https://swapi.py4e.com/api/';
 
 export const PLACEHOLDER_IMG =
   'https://previews.123rf.com/images/zdeneksasek/zdeneksasek1812/zdeneksasek181200130/113856614-black-and-white-ink-concept-art-drawing-of-futuristic-or-sci-fi-spaceship-or-spacecraft-.jpg';
